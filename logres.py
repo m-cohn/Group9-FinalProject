@@ -21,32 +21,11 @@ def run_augmented_data(name):
     # Load the data from the npz files
     data = np.load(name)
 
-    X = data['X']
-    y = data['y']
+    X_train = data['X_train']
+    y_train = data['y_train']
 
-    # Print the shape of the data
-    print(X.shape)
-    print(y.shape)
-
-    image = True
-
-    if image:
-        # Remove channel dimension, the first dimension, from each image so that shape is 2d
-        X = [x.squeeze() for x in X]
-
-    print("New shape for each image", X[0].shape)
-
-    # Convert X back to a numpy array
-    X = np.array(X)
-
-    # Flatten each 2D mel spectrogram into a 1D vector
-    X_flat = [x.flatten() for x in X]
-
-    # Convert X_flat back to a numpy array
-    X_flat = np.array(X_flat)
-
-    # Split the dataset into training, and validation sets
-    X_train, X_test, y_train, y_test = train_test_split(X_flat, y, test_size=0.1, random_state=42)
+    X_test = data['X_val']
+    y_test = data['y_val']
 
     # Print the shape of the training and validation sets
     print(X_train.shape)
