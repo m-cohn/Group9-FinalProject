@@ -59,3 +59,13 @@ def extract_mfcc(audio_file, n_mfcc=13, n_fft=512, hop_length=256):
     signal, sample_rate = librosa.load(audio_file)
     mfcc = librosa.feature.mfcc(y=signal, sr=sample_rate, n_mfcc=n_mfcc, n_fft=n_fft, hop_length=hop_length)
     return mfcc
+
+def pad_spectrogram(spectrogram, target_length, noise=True, noise_scale=0.003):
+    if noise:
+        padding = np.random.normal(loc=0, scale=noise_scale, size=(spectrogram.shape[0], target_length - spectrogram.shape[1]))
+    else:
+        padding = np.full((spectrogram.shape[0], target_length - spectrogram.shape[1]), 0.0)
+
+    padded_spectrogram = np.hstack((spectrogram, padding))
+    return padded_spectrogram
+

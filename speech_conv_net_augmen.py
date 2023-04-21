@@ -9,14 +9,14 @@ import torch.nn as nn
 import torch.nn.functional as F
 from tqdm import tqdm
 
-from NeuralNets import Net, MediumweightCNN, ConvNeuralNet
+from NeuralNets import Net, MediumweightCNN, ConvNeuralNet, MediumweightCNN_MFCC, MediumweightCNN_padded
 
 from torch.optim.lr_scheduler import ExponentialLR
 
 torch.manual_seed(432)
 
 # Load the data from the npz files
-data = np.load('log_mel_spectro_data_min_max_norm_augmented_v1.npz')
+data = np.load('log_mel_spectro_data_min_max_norm_augmented_v2.npz')
 X_train = data['X_train']
 y_train = data['y_train']
 X_val = data['X_val']
@@ -54,17 +54,17 @@ model.to(device)
 # Define the loss function and optimizer
 criterion = nn.BCELoss()
 #optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-2, weight_decay=1e-5)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=4e-4)
 # optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
 # optimizer = torch.optim.SGD(model.parameters(), lr=1e-5, momentum=0.9, weight_decay=1e-5)
-# optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.1)
-# optimizer = torch.optim.SGD(model.parameters(), lr=1e-2, momentum=0.09, weight_decay=1e-5)
+# optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.1
+# optimizer = torch.optim.SGD(model.parameters(), lr=1e-4, momentum=0.09, weight_decay=1e-5)
 
 # Define the ExponentialLR scheduler
 use_scheduler = True
 
 if use_scheduler:
-    gamma = 0.90
+    gamma = 0.78
     scheduler = ExponentialLR(optimizer, gamma=gamma, verbose=True)
 
 # Create the datasets
@@ -87,7 +87,7 @@ val_losses = []
 val_accs = []
 
 # Set the number of epochs
-num_epochs = 100
+num_epochs = 30
 
 # Increment epoch counter
 epochs = 0
