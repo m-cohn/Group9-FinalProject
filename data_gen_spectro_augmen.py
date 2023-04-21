@@ -179,6 +179,6 @@ print("Number of non-english speakers in validation set: ", len(val_set_labels) 
 
 file_name = 'log_mel_spectro_data_min_max_norm_augmented.npz'
 print("Saving augmented spectrogram data to file: ", file_name)
-np.savez('log_mel_spectro_data_min_max_norm_augmented_v2.npz', X_train=train_set_spectro, y_train=train_set_labels, X_val=val_set_spectro, y_val=val_set_labels)
+np.savez(file_name, X_train=train_set_spectro, y_train=train_set_labels, X_val=val_set_spectro, y_val=val_set_labels)
 
 
