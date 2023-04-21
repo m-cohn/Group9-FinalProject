@@ -14,7 +14,7 @@ from NeuralNets import Net
 torch.manual_seed(432)
 
 # Load the data from the npz files
-data = np.load('mel_spectro_data_min_max_norm.npz')
+data = np.load('mfcc_data_20.npz')
 X = data['X']
 y = data['y']
 
