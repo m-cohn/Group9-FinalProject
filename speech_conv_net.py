@@ -47,7 +47,7 @@ model.to(device)
 # Define the loss function and optimizer
 criterion = nn.BCELoss()
 #optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
-optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
+# optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
 # optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9, weight_decay=1e-5)
 # optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 # ptimizer = torch.optim.SGD(model.parameters(), lr=1e-4, momentum=0.01, weight_decay=1e-5)

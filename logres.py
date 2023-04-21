@@ -7,7 +7,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 
 # Load the data from the npz files
-data = np.load('mel_spectro_data_min_max_norm_augmented.npz')
+data = np.load('mfcc_data_20.npz')
 X = data['X']
 y = data['y']
 
@@ -15,13 +15,14 @@ y = data['y']
 print(X.shape)
 print(y.shape)
 
-image = True
+image = False
 
 if image:
     # Remove channel dimension, the first dimension, from each image so that shape is 2d
     X = [x.squeeze() for x in X]
 
-print("New shape for each image", X[0].shape)
+if image:
+    print("New shape for each image", X[0].shape)
 
 # Convert X back to a numpy array
 X = np.array(X)

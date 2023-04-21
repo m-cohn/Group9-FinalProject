@@ -18,28 +18,37 @@ class Net(nn.Module):
         
     
 class MediumweightCNN(nn.Module):
-    def __init__(self):
+    def __init__(self, use_maxpool=True):
         super(MediumweightCNN, self).__init__()
-        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, stride=2, padding=1)
-        self.maxpool1 = nn.MaxPool2d(kernel_size=4, stride=2)
-
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1)
-        self.maxpool2 = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.use_maxpool = use_maxpool
         
-        self.conv3 = nn.Conv2d(64, 128, kernel_size=3, stride=2, padding=1)
-        self.maxpool3 = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=(3, 5), stride=2, padding=(1, 2))
+        if self.use_maxpool:
+            self.maxpool1 = nn.MaxPool2d(kernel_size=(2, 4), stride=2)
 
-        self.fc1 = nn.Linear(2816, 128)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=(3, 5), stride=2, padding=(1, 2))
+        if self.use_maxpool:
+            self.maxpool2 = nn.MaxPool2d(kernel_size=(2, 4), stride=2)
+        
+        self.conv3 = nn.Conv2d(64, 128, kernel_size=(3, 5), stride=2, padding=(1, 2))
+        if self.use_maxpool:
+            self.maxpool3 = nn.MaxPool2d(kernel_size=(2, 4), stride=2)
+
+        num_nodes = 2560 if self.use_maxpool else 182272
+        self.fc1 = nn.Linear(num_nodes, 256)
         self.dropout = nn.Dropout(p=0.5)
-        self.fc2 = nn.Linear(128, 1)
+        self.fc2 = nn.Linear(256, 1)
 
     def forward(self, x):
         x = F.relu(self.conv1(x))
-        x = self.maxpool1(x)
+        if self.use_maxpool:
+            x = self.maxpool1(x)
         x = F.relu(self.conv2(x))
-        x = self.maxpool2(x)
+        if self.use_maxpool:
+            x = self.maxpool2(x)
         x = F.relu(self.conv3(x))
-        x = self.maxpool3(x)
+        if self.use_maxpool:
+            x = self.maxpool3(x)
 
         # Reshape for fully connected layer
         x = torch.flatten(x, 1)
@@ -50,8 +59,8 @@ class MediumweightCNN(nn.Module):
         x = torch.sigmoid(x)
 
         return x.squeeze()
-    
 
+    
 class ConvNeuralNet(nn.Module):
     def __init__(self, num_classes=1):
         super(ConvNeuralNet, self).__init__()
