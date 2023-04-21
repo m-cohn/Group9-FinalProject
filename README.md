@@ -8,10 +8,10 @@
     - Run the "Create Zipped Data" section of run.ipynb (this should take roughly 30 minutes)
         - Before this step, please make sure that you have the original data downloaded and unzipped in the project folder root folder. This data can be downloaded from Kaggle at 
         
-        https://www.kaggle.com/datasets/rtatman/speech-accent-archive
+        - https://www.kaggle.com/datasets/rtatman/speech-accent-archive
         
-        You'll only need the audio recordings for this, so move the main recordings folder into the project's root folder, such that the path to any audio file in the recordings folder is:
+        - You'll only need the audio recordings for this, so move the main recordings folder into the project's root folder, such that the path to any audio file in the recordings folder is:
 
-        project_root_folder/recordings/recordings/audio.mp3 
+        - project_root_folder/recordings/recordings/audio.mp3 
 
 3. Run run.ipynb. If you downloaded the data in step two, you may skip the first cell, the "Create Zipped Data" section
