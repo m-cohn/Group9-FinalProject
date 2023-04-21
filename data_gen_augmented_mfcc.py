@@ -11,20 +11,10 @@ df = pd.read_csv('speakers_all.csv')
 # Display the first 5 rows of the dataframe
 df.head()
 
-# Print distribution of native_language, and country
-print(df['native_language'].value_counts())
-print(df['country'].value_counts())
-
 # Create two classes of data, USA and non-USA, and grab the filenames of both classes
 # Also make sure the file_missing? column is False
 english = df[(df['native_language'] == 'english') & (df['file_missing?'] == False)]['filename']
 non_english = df[(df['native_language'] != 'english') & (df['file_missing?'] == False)]['filename']
-
-print('Number of english: ', len(english))
-print('Number of non-english: ', len(non_english))
-
-# Print total number of files
-print('Total number of files: ', len(df))
 
 # Create a list of countries that have less than 10 speakers
 native_languages = df['native_language'].value_counts()
@@ -38,10 +28,6 @@ non_english = df[(df['native_language'] != 'english') & (df['file_missing?'] == 
 
 # Randomly remove files from non_english until the number of files is equal to the number of english files
 non_english = non_english.sample(n=len(english), random_state=42)
-
-print("After clean up: \n")
-print('Number of english: ', len(english))
-print('Number of non-english: ', len(non_english))
 
 # Create a helper function for extracting the MFCCs from the audio files
 def extract_mfcc_1d(audio_file, n_mfcc=40, sample_rate=16000, load=True):
@@ -124,7 +110,7 @@ for file in train_set:
     # Add a counter to keep track of progress
     i += 1
     if i % 100 == 0:
-        print(i + " out of " + str(len(train_set)) + " files processed.")
+        print(str(i) + " out of " + str(len(train_set)) + " files processed.")
 
 # Grab the spectros for all audio files in the non-english class
 val_set_mfcc = []
@@ -149,7 +135,7 @@ for file in val_set:
     # Add a counter to keep track of progress
     i += 1
     if i % 100 == 0:
-        print(i + " out of " + str(len(val_set)) + " files processed.")
+        print(str(i) + " out of " + str(len(val_set)) + " files processed.")
 
 # Convert the lists to numpy arrays
 train_set_mfcc = np.array(train_set_mfcc)
